@@ -1,0 +1,10 @@
+{
+  "name": "@bjornlu/sponsors",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen": "node ./gen.js",
+    "gist": "bash gist.sh"
+  }
+}
