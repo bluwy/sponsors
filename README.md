@@ -32,7 +32,15 @@ Next, go to http://raw.githack.com to retrieve a link to the SVG. You should pas
 
 You can now use these URLs anywhere. For my case, I've setup https://bjornlu.com/sponsors.svg to redirect to the URL.
 
-> Note the guide has the following assumptions:
+Since githack caches prod URLs strongly, you might want to purge the cache when updating sponsors. This is also automated by providing the prod URL in the `.env` file:
+
+```ini
+SPONSORS_URL=<prod_url>
+```
+
+> Note: Purge the cache sparingly as githack heavily throttles subsequent requests.
+
+> Note: The guide has the following assumptions:
 >
 > 1. The git remote uses HTTPS.
 > 2. You have credentials to update gists. Create a [personal access token](https://github.com/settings/tokens) otherwise.
