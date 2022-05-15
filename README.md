@@ -28,17 +28,7 @@ Make sure there's an existing `sponsors.svg` file locally before continuing to t
 
 To update the `sponsors.svg` file of the gist, run `npm run gist`. It will create a temporary `gist` folder, copy over the `sponsors.svg` file, and force push to the remote gist to ensure only one commit exists.
 
-Next, go to http://raw.githack.com to retrieve a link to the SVG. You should paste in something like https://gist.github.com/user/gist_id/raw/sponsors.svg to retrieve a prod and dev URL.
-
-You can now use these URLs anywhere. For my case, I've setup https://bjornlu.com/sponsors.svg to redirect to the URL.
-
-Since githack caches prod URLs strongly, you might want to purge the cache when updating sponsors. This is also automated by providing the prod URL in the `.env` file:
-
-```ini
-SPONSORS_URL=<prod_url>
-```
-
-> Note: Purge the cache sparingly as githack heavily throttles subsequent requests.
+Now you can access the SVG file with a URL like https://gist.github.com/user/gist_id/raw/sponsors.svg. Serving directly from this endpoint is not ideal as GitHub doesn't send the proper `Content-Type`, for me I've set a [custom proxy](https://github.com/bluwy/website/blob/master/src/routes/sponsors.svg.js) to acheive so. There are options like http://raw.githack.com but it's `Cache-Control` is too long.
 
 > Note: The guide has the following assumptions:
 >

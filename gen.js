@@ -66,10 +66,10 @@ async function fetchTiers() {
   const pledgesResultJson = JSON.parse(pledgesResult.toString())
 
   // debug
-  await fs.writeFile(
-    'pledges.json',
-    JSON.stringify(campaignResultJson, null, 2)
-  )
+  // await fs.writeFile(
+  //   'pledges.json',
+  //   JSON.stringify(campaignResultJson, null, 2)
+  // )
 
   /** @type {Tier[]} */
   const tiers = pledgesResultJson.included
