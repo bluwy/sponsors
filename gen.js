@@ -7,6 +7,14 @@ const svgWidthPx = 768
 const paddingPx = 16
 const titlePx = 20
 
+// hardcode map of patreon id to github username for image
+const patreonToGithub = {
+  2341390: 'yyx990803',
+  5300231: 'patak-dev',
+  30396097: 'DannyFeliz',
+  36653529: 'soetz'
+}
+
 await dotenv()
 const tiers = await fetchTiers()
 const sponsorImgMap = await optimizeSponsorImages(tiers)
@@ -99,10 +107,12 @@ async function fetchTiers() {
       continue
     }
 
+    const gh = patreonToGithub[sponsorId]
+
     tier.sponsors.push({
       name: sponsor.attributes.full_name,
-      img: sponsor.attributes.thumb_url,
-      url: sponsor.attributes.url
+      img: gh ? `https://github.com/${gh}.png` : sponsor.attributes.thumb_url,
+      url: gh ? `https://github.com/${gh}` : sponsor.attributes.url
     })
   }
 
@@ -221,6 +231,21 @@ async function dotenv() {
 function doFetch(options, postData) {
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
+      if (
+        res.statusCode >= 300 &&
+        res.statusCode < 400 &&
+        res.headers.location
+      ) {
+        const newURL = new URL(res.headers.location)
+        if (typeof options === 'object' && !(options instanceof URL)) {
+          options.hostname = newURL.host
+          options.path = newURL.pathname
+        } else {
+          options = newURL
+        }
+        doFetch(options, postData).then(resolve, reject)
+        return
+      }
       let chunks = []
       res.on('data', (d) => chunks.push(d))
       res.on('error', (e) => reject(e))
