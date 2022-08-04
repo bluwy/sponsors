@@ -15,6 +15,22 @@ const patreonToGithub = {
   36653529: 'soetz'
 }
 
+/** @type {Tier} */
+const specialTier = {
+  id: 'special',
+  name: 'Special Sponsor',
+  sponsors: [
+    {
+      name: 'Astro',
+      url: 'https://astro.build',
+      img: 'https://astro.build/assets/press/full-logo-light.png',
+      imgDark: 'https://astro.build/assets/press/full-logo-dark.png'
+    }
+  ],
+  imgSize: 100,
+  aspect: 2.3
+}
+
 await dotenv()
 const tiers = await fetchTiers()
 const sponsorImgMap = await optimizeSponsorImages(tiers)
@@ -22,11 +38,14 @@ const svg = createSvg(tiers, sponsorImgMap)
 await fs.writeFile('sponsors.svg', svg)
 console.log('Generated sponsors.svg')
 
+// Aspect = width / height (default 1)
+
 /**
  * @typedef {{
  *  name: string,
  *  url: string,
- *  img: string
+ *  img: string,
+ *  imgDark?: string
  * }} Sponsor
  */
 
@@ -35,7 +54,8 @@ console.log('Generated sponsors.svg')
  *  id: string,
  *  name: string,
  *  sponsors: Sponsor[],
- *  imgSize: number
+ *  imgSize: number,
+ *  aspect?: number
  * }} Tier
  */
 
@@ -116,6 +136,8 @@ async function fetchTiers() {
     })
   }
 
+  tiers.unshift(specialTier)
+
   return tiers
 }
 
@@ -126,7 +148,12 @@ async function fetchTiers() {
 function createSvg(tiers, sponsorImgMap) {
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidthPx}" height="__SVG_HEIGHT__" viewBox="0 0 ${svgWidthPx} __SVG_HEIGHT__">`
   svg += `<clipPath id="clip-circle" clipPathUnits="objectBoundingBox"><circle r=".5" cx=".5" cy=".5"/></clipPath>`
-  svg += `<style>text { fill: #777777; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;}</style>`
+  svg +=
+    `<style>` +
+    `text { fill: #777777; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;}` +
+    `.dark {display: none; }` +
+    `@media (prefers-color-scheme: dark) { .light { display: none; } .dark {display: block; } }` +
+    `</style>`
 
   let y = paddingPx
 
@@ -145,8 +172,11 @@ function createSvg(tiers, sponsorImgMap) {
     // x * (s + 16) <= 1024 - 16
     // x <= (1024 - 16) / (s+16)
 
+    const imgWidth = tier.imgSize * (tier.aspect ?? 1)
+    const imgHeight = tier.imgSize
+
     const maxSponsorCountPerRow = Math.floor(
-      (svgWidthPx - paddingPx) / (tier.imgSize + paddingPx)
+      (svgWidthPx - paddingPx) / (imgWidth + paddingPx)
     )
 
     for (let i = 0; i < tier.sponsors.length; i += maxSponsorCountPerRow) {
@@ -157,16 +187,25 @@ function createSvg(tiers, sponsorImgMap) {
       //
       // (1024 - (x * s + (x + 1) * 16)) / 2
 
-      let x = (svgWidthPx - (max * tier.imgSize + (max - 1) * paddingPx)) / 2
+      let x = (svgWidthPx - (max * imgWidth + (max - 1) * paddingPx)) / 2
 
       for (let j = i; j < max; j++) {
         const sponsor = tier.sponsors[j]
         const img = `data:image/png;base64,${sponsorImgMap[sponsor.img]}`
-        svg += `<a href="${sponsor.url}" target="_blank"><image clip-path="url(#clip-circle)" x="${x}" y="${y}" width="${tier.imgSize}" height="${tier.imgSize}" href="${img}"/></a>`
-        x += tier.imgSize + paddingPx
+        const imgDark = sponsor.imgDark
+          ? `data:image/png;base64,${sponsorImgMap[sponsor.imgDark]}`
+          : ''
+        const clipPath =
+          tier.id === 'special' ? '' : ' clip-path="url(#clip-circle)"'
+        const image = imgDark
+          ? `<image${clipPath} class="light" x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${img}"/>` +
+            `<image${clipPath} class="dark" x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${imgDark}"/>`
+          : `<image${clipPath} x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${img}"/>`
+        svg += `<a href="${sponsor.url}" target="_blank">${image}</a>`
+        x += imgWidth + paddingPx
       }
 
-      y += tier.imgSize + paddingPx
+      y += imgHeight + paddingPx
     }
 
     y += paddingPx
@@ -199,6 +238,13 @@ async function optimizeSponsorImages(tiers) {
         promises.push(
           doFetch(sponsor.img).then((result) => {
             resultMap[sponsor.img] = result.toString('base64')
+          })
+        )
+      }
+      if (sponsor.imgDark && !resultMap[sponsor.imgDark]) {
+        promises.push(
+          doFetch(sponsor.imgDark).then((result) => {
+            resultMap[sponsor.imgDark] = result.toString('base64')
           })
         )
       }
