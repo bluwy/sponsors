@@ -23,8 +23,7 @@ const specialTier = {
     {
       name: 'Astro',
       url: 'https://astro.build',
-      img: 'https://astro.build/assets/press/full-logo-light.png',
-      imgDark: 'https://astro.build/assets/press/full-logo-dark.png'
+      img: './images/astro.png'
     }
   ],
   imgSize: 100,
@@ -44,8 +43,7 @@ console.log('Generated sponsors.svg')
  * @typedef {{
  *  name: string,
  *  url: string,
- *  img: string,
- *  imgDark?: string
+ *  img: string
  * }} Sponsor
  */
 
@@ -151,8 +149,6 @@ function createSvg(tiers, sponsorImgMap) {
   svg +=
     `<style>` +
     `text { fill: #777777; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;}` +
-    `.dark {display: none; }` +
-    `@media (prefers-color-scheme: dark) { .light { display: none; } .dark {display: block; } }` +
     `</style>`
 
   let y = paddingPx
@@ -192,16 +188,9 @@ function createSvg(tiers, sponsorImgMap) {
       for (let j = i; j < max; j++) {
         const sponsor = tier.sponsors[j]
         const img = `data:image/png;base64,${sponsorImgMap[sponsor.img]}`
-        const imgDark = sponsor.imgDark
-          ? `data:image/png;base64,${sponsorImgMap[sponsor.imgDark]}`
-          : ''
         const clipPath =
           tier.id === 'special' ? '' : ' clip-path="url(#clip-circle)"'
-        const image = imgDark
-          ? `<image${clipPath} class="light" x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${img}"/>` +
-            `<image${clipPath} class="dark" x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${imgDark}"/>`
-          : `<image${clipPath} x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${img}"/>`
-        svg += `<a href="${sponsor.url}" target="_blank">${image}</a>`
+        svg += `<a href="${sponsor.url}" target="_blank"><image${clipPath} x="${x}" y="${y}" width="${imgWidth}" height="${imgHeight}" href="${img}"/></a>`
         x += imgWidth + paddingPx
       }
 
@@ -235,18 +224,19 @@ async function optimizeSponsorImages(tiers) {
   for (const tier of tiers) {
     for (const sponsor of tier.sponsors) {
       if (!resultMap[sponsor.img]) {
-        promises.push(
-          doFetch(sponsor.img).then((result) => {
-            resultMap[sponsor.img] = result.toString('base64')
-          })
-        )
-      }
-      if (sponsor.imgDark && !resultMap[sponsor.imgDark]) {
-        promises.push(
-          doFetch(sponsor.imgDark).then((result) => {
-            resultMap[sponsor.imgDark] = result.toString('base64')
-          })
-        )
+        if (sponsor.img.startsWith('.')) {
+          promises.push(
+            fs.readFile(sponsor.img, 'base64').then((result) => {
+              resultMap[sponsor.img] = result
+            })
+          )
+        } else {
+          promises.push(
+            doFetch(sponsor.img).then((result) => {
+              resultMap[sponsor.img] = result.toString('base64')
+            })
+          )
+        }
       }
     }
   }
