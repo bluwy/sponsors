@@ -12,7 +12,9 @@ const patreonToGithub = {
   2341390: 'yyx990803',
   5300231: 'patak-dev',
   30396097: 'DannyFeliz',
-  36653529: 'soetz'
+  36653529: 'soetz',
+  21723645: 'fwouts',
+  55198421: 'Jutanium'
 }
 
 /** @type {Tier} */
