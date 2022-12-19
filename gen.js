@@ -95,10 +95,7 @@ async function fetchTiers() {
   const pledgesResultJson = JSON.parse(pledgesResult.toString())
 
   // debug
-  // await fs.writeFile(
-  //   'pledges.json',
-  //   JSON.stringify(campaignResultJson, null, 2)
-  // )
+  // await fs.writeFile('pledges.json', JSON.stringify(pledgesResultJson, null, 2))
 
   /** @type {Tier[]} */
   const tiers = pledgesResultJson.included
@@ -114,6 +111,8 @@ async function fetchTiers() {
     }))
 
   for (const pledge of pledgesResultJson.data) {
+    if (pledge.attributes.declined_since) continue
+
     const tierId = pledge.relationships.reward.data.id
     const tier = tiers.find((v) => v.id === tierId)
     if (!tierId) {
@@ -139,7 +138,7 @@ async function fetchTiers() {
 
   tiers.unshift(specialTier)
 
-  return tiers
+  return tiers.filter((t) => t.sponsors.length > 0)
 }
 
 /**
