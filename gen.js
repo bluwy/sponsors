@@ -15,7 +15,12 @@ const patreonToGithub = {
   36653529: 'soetz',
   21723645: 'fwouts',
   55198421: 'Jutanium',
-  64905238: 'PuruVJ'
+  64905238: 'PuruVJ',
+  81366083: 'danfry1'
+}
+
+const patreonCustomUrl = {
+  87202845: 'https://easygo.io'
 }
 
 /** @type {Tier} */
@@ -132,7 +137,9 @@ async function fetchTiers() {
     tier.sponsors.push({
       name: sponsor.attributes.full_name,
       img: gh ? `https://github.com/${gh}.png` : sponsor.attributes.thumb_url,
-      url: gh ? `https://github.com/${gh}` : sponsor.attributes.url
+      url: gh
+        ? `https://github.com/${gh}`
+        : patreonCustomUrl[sponsorId] || sponsor.attributes.url
     })
   }
 
