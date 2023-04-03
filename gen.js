@@ -2,10 +2,10 @@ import fs from 'node:fs/promises'
 import https from 'node:https'
 
 // assuming 5 tiers (change if needed)
-const sponsorImgSizePx = [90, 70, 60, 50, 40]
+const sponsorImgSizePx = [68, 60, 50, 45, 35]
 const svgWidthPx = 768
 const paddingPx = 16
-const titlePx = 20
+const titlePx = 16
 
 // hardcode map of patreon id to github username for image
 const patreonToGithub = {
@@ -35,8 +35,8 @@ const specialTier = {
       img: './images/astro.png'
     }
   ],
-  imgSize: 100,
-  aspect: 2.3
+  imgSize: 70,
+  aspect: 3.82
 }
 
 await dotenv()
@@ -204,7 +204,7 @@ function createSvg(tiers, sponsorImgMap) {
         x += imgWidth + paddingPx
       }
 
-      y += imgHeight + paddingPx
+      y += imgHeight + paddingPx / 2
     }
 
     y += paddingPx
