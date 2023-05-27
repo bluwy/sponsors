@@ -17,7 +17,8 @@ const patreonToGithub = {
   55198421: 'Jutanium',
   64905238: 'PuruVJ',
   81366083: 'danfry1',
-  88859138: 'fi3ework'
+  88859138: 'fi3ework',
+  750144: 'PxlBuzzard'
 }
 
 const patreonCustomUrl = {
