@@ -16,12 +16,12 @@ Run `npm run gen` to generate the SVG.
 
 ## Serving the SVG
 
-The `gist.sh` script uses GitHub gist as a static file host. Go to https://gist.github.com and create a public gist. Give any description and create a `sponsors.svg` file with `<svg></svg>` as the content (temporary only). Click on the `embed` button, change to `Clone via HTTPS`, and take note of the git URL.
+The `gist.sh` script uses GitHub gist as a static file host. Go to https://gist.github.com and create a public gist. Give any description and create a `sponsors.svg` file with `<svg></svg>` as the content (temporary only). Click on the `embed` button, change to `Clone via SSH`, and take note of the SSH URL.
 
-Update the `.env` file with the git URL:
+Update the `.env` file with the SSH URL:
 
 ```ini
-SPONSORS_GIST=<git_url>
+SPONSORS_GIST=<ssh_url>
 ```
 
 Make sure there's an existing `sponsors.svg` file locally before continuing to the next step.
@@ -32,9 +32,8 @@ Now you can access the SVG file with a URL like https://gist.github.com/user/gis
 
 > Note: The guide has the following assumptions:
 >
-> 1. The git remote uses HTTPS.
-> 2. You have credentials to update gists. Create a [personal access token](https://github.com/settings/tokens) otherwise.
-> 3. The default git branch is `master`.
+> 1. You have set up SSH. See [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
+> 2. The default git branch is `master`.
 
 ## Todo
 
@@ -49,7 +48,7 @@ Now you can access the SVG file with a URL like https://gist.github.com/user/gis
 ## Sponsors
 
 <p align="center">
-  <a href="https://bjornlu.com/sponsors.svg">
+  <a href="https://bjornlu.com/sponsor">
     <img src="https://bjornlu.com/sponsors.svg" alt="Sponsors" />
   </a>
 </p>
