@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "gen": "node ./gen.js",
+    "gen": "sponsorkit",
     "gist": "bash gist.sh"
   },
   "dependencies": {

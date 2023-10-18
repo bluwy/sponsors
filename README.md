@@ -1,18 +1,14 @@
 # sponsors
 
-A zero-dependencies script to generate sponsors SVG from [Patreon](https://patreon.com).
+Using https://github.com/antfu/sponsorkit
 
 ## Usage
 
-Go to https://www.patreon.com/portal/registration/register-clients to create an API Key. Once done, take note of your `Creator's Access Token`. It would be used to fetch data from the [Patreon API](https://docs.patreon.com).
-
-Create an `.env` file, replace `<creators_access_token>` with the token above:
-
-```ini
-PATREON_ACCESS_TOKEN=<creators_access_token>
 ```
+pnpm i
 
-Run `npm run gen` to generate the SVG.
+pnpm gen
+```
 
 ## Serving the SVG
 
@@ -24,9 +20,9 @@ Update the `.env` file with the SSH URL:
 SPONSORS_GIST=<ssh_url>
 ```
 
-Make sure there's an existing `sponsors.svg` file locally before continuing to the next step.
+Make sure there's an existing `sponsorkit/sponsors.svg` file locally before continuing to the next step.
 
-To update the `sponsors.svg` file of the gist, run `npm run gist`. It will create a temporary `gist` folder, copy over the `sponsors.svg` file, and force push to the remote gist to ensure only one commit exists.
+To update the `sponsors.svg` file of the gist, run `pnpm gist`. It will create a temporary `gist` folder, copy over the `sponsors.svg` file, and force push to the remote gist to ensure only one commit exists.
 
 Now you can access the SVG file with a URL like https://gist.github.com/user/gist_id/raw/sponsors.svg. Serving directly from this endpoint is not ideal as GitHub doesn't send the proper `Content-Type`, for me I've set a [custom proxy](https://github.com/bluwy/website/blob/master/src/routes/sponsors.svg.js) to acheive so. There are options like http://raw.githack.com but it's `Cache-Control` is too long.
 
@@ -34,16 +30,6 @@ Now you can access the SVG file with a URL like https://gist.github.com/user/gis
 >
 > 1. You have set up SSH. See [GitHub docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 > 2. The default git branch is `master`.
-
-## Todo
-
-- Pre-round the images to produce smaller SVG size
-- Use CSS `style` to group some styles
-- More configuration options
-
-## Attribution
-
-- https://github.com/antfu/sponsorkit
 
 ## Sponsors
 
