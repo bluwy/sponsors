@@ -4,7 +4,7 @@ SPONSORS_GIST=$(grep "SPONSORS_GIST" ./.env | awk -F "=" '{print $2}')
 
 echo "Updating gist..."
 mkdir -p gist
-cp sponsors.svg gist
+cp sponsorkit/sponsors.svg gist
 cd gist
 git init
 git remote add origin "$SPONSORS_GIST"

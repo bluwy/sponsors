@@ -6,5 +6,8 @@
   "scripts": {
     "gen": "node ./gen.js",
     "gist": "bash gist.sh"
+  },
+  "dependencies": {
+    "sponsorkit": "^0.8.9"
   }
 }

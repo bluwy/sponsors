@@ -1,5 +1,4 @@
 .env
-cache.json
-pledges.json
-sponsors.svg
 gist
+sponsorkit
+node_modules
