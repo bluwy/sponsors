@@ -38,7 +38,7 @@ export default defineConfig({
         boxWidth: 40,
         boxHeight: 48,
         container: {
-          sidePadding: 300,
+          sidePadding: 30,
         },
       }
     },
