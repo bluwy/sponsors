@@ -8,6 +8,6 @@
     "gist": "bash gist.sh"
   },
   "dependencies": {
-    "sponsorkit": "^0.8.9"
+    "sponsorkit": "^0.9.3"
   }
 }
