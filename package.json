@@ -7,8 +7,13 @@
     "gen": "sponsorkit",
     "gist": "bash gist.sh"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.12.3",
   "dependencies": {
-    "sponsorkit": "^0.9.3"
+    "sponsorkit": "^0.16.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "unconfig": "link:./unconfig"
+    }
   }
 }

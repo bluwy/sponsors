@@ -7,6 +7,7 @@ const astroLogo = (width, y) => `
 </a>`
 
 export default defineConfig({
+  formats: ['svg', 'png'],
   tiers: [
     {
       title: 'Mini Sponsor',
