@@ -26,7 +26,7 @@ export default defineConfig({
       monthlyDollars: 10,
       preset: {
         avatar: {
-          size: 45
+          size: 40
         },
         boxWidth: 50,
         boxHeight: 56,
@@ -42,7 +42,7 @@ export default defineConfig({
         avatar: {
           size: 50
         },
-        boxWidth: 60,
+        boxWidth: 70,
         boxHeight: 70,
         container: {
           sidePadding: 20
