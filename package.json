@@ -13,7 +13,7 @@
   },
   "pnpm": {
     "overrides": {
-      "unconfig": "link:./unconfig"
+      "unconfig": "npm:@bluwy/unconfig@^0.6.1"
     }
   }
 }
