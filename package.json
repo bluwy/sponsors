@@ -7,9 +7,9 @@
     "gen": "sponsorkit",
     "gist": "bash gist.sh"
   },
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@9.15.1",
   "dependencies": {
-    "sponsorkit": "^0.16.1"
+    "sponsorkit": "^0.16.2"
   },
   "pnpm": {
     "overrides": {

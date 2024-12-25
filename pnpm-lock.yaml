@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       sponsorkit:
-        specifier: ^0.16.1
-        version: 0.16.1
+        specifier: ^0.16.2
+        version: 0.16.2
 
 packages:
 
@@ -230,8 +230,8 @@ packages:
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
 
-  sponsorkit@0.16.1:
-    resolution: {integrity: sha512-ZpMQGuS88cULehAGDEZ8LEArarrKLuJb7WfHhQI2AouxA0wD7GYMWlg3R5T0MWfM1ibAU51kCrrGx9GcS3vRnQ==}
+  sponsorkit@0.16.2:
+    resolution: {integrity: sha512-58o/eEa5cczh2w9TK1hJahb3aDAyuubstlANapGSRkaeItDjmJQM8ptdoSJFD2T4/Ukcjvo+Oj11Y+XD1CDheg==}
     hasBin: true
 
   string-width@4.2.3:
@@ -457,7 +457,7 @@ snapshots:
     dependencies:
       is-arrayish: 0.3.2
 
-  sponsorkit@0.16.1:
+  sponsorkit@0.16.2:
     dependencies:
       '@antfu/utils': 0.7.10
       consola: 3.2.3
