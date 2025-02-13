@@ -112,11 +112,11 @@ async function compactComposer(composer, sponsors, config) {
   }
 
   const paddingTop = config.padding?.top ?? 20
-  const paddingBottom = config.padding?.bottom ?? 20
+  const paddingBottom = config.padding?.bottom ?? 15
 
   composer.addSpan(paddingTop)
   await generateBadgeGrid(composer, sponsorships, config.imageFormat)
-  composer.addSpan(Math.round(paddingTop * 0.75))
+  composer.addSpan(paddingBottom)
   generateLegendLine(composer, tierLegends)
   composer.addSpan(paddingBottom)
 }
