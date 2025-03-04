@@ -34,6 +34,7 @@ text {
   tiers: [
     {
       title: 'Mini',
+      monthlyDollars: 5,
       preset: {
         ...badgePreset,
         color: '#a1a1a1', // dark-gray-ish
@@ -85,9 +86,12 @@ text {
  * @param {import('sponsorkit').SponsorkitConfig} config
  */
 async function compactComposer(composer, sponsors, config) {
+  // An 0 dollar tier is required for `partitionTiers` to work,
+  // but it won't render later as `tier.preset` will be undefined.
+  const emptyTier = { title: '' }
   const tierPartitions = partitionTiers(
     sponsors,
-    config.tiers,
+    [emptyTier, ...config.tiers],
     config.includePastSponsors
   )
 
