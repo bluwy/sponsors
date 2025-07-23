@@ -107,7 +107,11 @@ async function compactComposer(composer, sponsors, config) {
         title: tier.title,
         titleLength: preset.titleLength,
       })
-      sponsorships.push(...sponsors)
+      sponsorships.push(
+        // Sort by monthly dollars if some paid a little more for the tier,
+        // otherwise leave it as is (which is already sorted by date)
+        ...sponsors.sort((a, b) => b.monthlyDollars - a.monthlyDollars)
+      )
       // Hack. Pass preset info for each sponsor
       sponsors.forEach((sponsor) => {
         sponsor.preset = preset
