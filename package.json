@@ -7,13 +7,8 @@
     "gen": "sponsorkit",
     "gist": "bash gist.sh"
   },
-  "packageManager": "pnpm@9.15.1",
+  "packageManager": "pnpm@10.13.1",
   "dependencies": {
-    "sponsorkit": "^16.3.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "unconfig": "npm:@bluwy/unconfig@^0.6.1"
-    }
+    "sponsorkit": "^16.5.0"
   }
 }
